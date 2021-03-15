@@ -53,6 +53,7 @@ namespace SlackClone.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("hubs/chat");
+                endpoints.MapHub<ChannelHub>("hubs/channel");
                 endpoints.MapControllers();
             });
         }

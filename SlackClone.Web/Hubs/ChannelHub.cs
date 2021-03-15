@@ -3,8 +3,8 @@ using SlackClone.Web.Hubs.Clients;
 
 namespace SlackClone.Web.Hubs
 {
-    public class ChatHub :
-        Hub<IChatClient>
+    public class ChannelHub :
+        Hub<IChannelClient>
     {
     }
 }

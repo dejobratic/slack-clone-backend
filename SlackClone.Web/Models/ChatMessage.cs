@@ -1,8 +1,13 @@
-﻿namespace SlackClone.Web.Models
+﻿using System;
+
+namespace SlackClone.Web.Models
 {
     public class ChatMessage
     {
-        public string User { get; set; }
-        public string Message { get; set; }
+        public Guid Id { get; set; }
+        public object User { get; set; }
+        public string Text { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public Guid UserId { get; set; }
     }
 }
