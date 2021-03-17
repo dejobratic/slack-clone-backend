@@ -30,7 +30,7 @@ namespace SlackClone.Core.Services
                 return Task.FromResult(messages);
             }
 
-            throw new Exception($"No channel found with id {specification.ChannelId}.");
+            return Task.FromResult(Array.Empty<Message>());
         }
 
         public Task Save(Message message)

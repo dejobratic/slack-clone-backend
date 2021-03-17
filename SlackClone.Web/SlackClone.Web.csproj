@@ -4,5 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SlackClone.Contract\SlackClone.Contract.csproj" />
+    <ProjectReference Include="..\SlackClone.Core\SlackClone.Core.csproj" />
+  </ItemGroup>
+
 
 </Project>

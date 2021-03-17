@@ -161,17 +161,16 @@ namespace SlackClone.Core.Tests.Unit.Services
         }
 
         [TestMethod]
-        public void Throws_exception_when_no_channel_is_found_by_specification()
+        public async Task Returns_empty_array_when_no_channel_is_found_by_specification()
         {
             var specification = new MessageSpecification
             {
                 ChannelId = Guid.Parse("a0f9a2b7-a74a-41c4-8a58-ca495b45ce4d")
             };
 
-            Func<Task> action = () => _sut.GetBy(specification);
+            var messages = await _sut.GetBy(specification);
 
-            action.Should().Throw<Exception>()
-                .WithMessage("No channel found with id a0f9a2b7-a74a-41c4-8a58-ca495b45ce4d.");
+            messages.Should().BeEmpty();
         }
     }
 }

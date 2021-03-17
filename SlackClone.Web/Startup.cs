@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SlackClone.Core.Services;
 using SlackClone.Web.Hubs;
 
 namespace SlackClone.Web
@@ -31,6 +32,9 @@ namespace SlackClone.Web
                     .WithOrigins("http://localhost:3000", "https://localhost:3000");
                 });
             });
+
+            services.AddSingleton<IChannelRepository, DummyChannelRepository>();
+            services.AddSingleton<IChatRepository, DummyChatRepository>();
 
             services.AddSignalR();
             services.AddControllers().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);

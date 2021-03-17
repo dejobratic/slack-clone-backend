@@ -1,49 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SlackClone.Contract.Requests;
+using SlackClone.Core.Extensions;
+using SlackClone.Core.Models;
+using SlackClone.Core.Services;
 using SlackClone.Web.Hubs;
 using SlackClone.Web.Hubs.Clients;
-using SlackClone.Web.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SlackClone.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/chats/messages")]
     public class ChatController :
         ControllerBase
     {
+        private readonly IChatRepository _repo;
         private readonly IHubContext<ChatHub, IChatClient> _hub;
 
         public ChatController(
+            IChatRepository repo,
             IHubContext<ChatHub, IChatClient> hub)
         {
+            _repo = repo;
             _hub = hub;
         }
 
-        [HttpPost]
-        [Route("/api/chats/messages")]
-        public async Task ReceiveMessage(
-            [FromBody] CreateMessageRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetChannelMessages(
+            [FromQuery] Guid channelId,
+            [FromQuery] int pageNumber,
+            [FromQuery] int pageSize)
         {
-            var message = new ChatMessage
+            var specification = new MessageSpecification
             {
-                Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
-                User = new
-                {
-                    Name = "Dejan Bratic",
-                    Image = "https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-                },
-                Text = request.Text
+                ChannelId = channelId,
+                PageNumber = pageNumber,
+                PageSize = pageSize
             };
 
-            await _hub.Clients.All.ReceiveMessage(message);
+            var messages = await _repo.GetBy(specification);
+            return Ok(messages.Select(m => m.ToContractModel()));
         }
 
-        public class CreateMessageRequest
+        [HttpPost]
+        public async Task SendMessage(
+            [FromBody] CreateMessageRequest request)
         {
-            public string Text { get; set; }
+            var message = new Message
+            {
+                Id = Guid.NewGuid(),
+                Text = request.Text,
+                CreatedAt = DateTime.UtcNow,
+                CreatorId = request.CreatorId,
+                ChannelId = request.ChannelId,
+            };
+
+            await _repo.Save(message);
+            await _hub.Clients.All.ReceiveMessage(message.ToContractModel());
         }
     }
 }
