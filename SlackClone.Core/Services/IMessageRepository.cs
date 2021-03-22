@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SlackClone.Core.Services
 {
-    public interface IChatRepository
+    public interface IMessageRepository
     {
         Task<Message[]> GetBy(MessageSpecification specification);
         Task Save(Message message);

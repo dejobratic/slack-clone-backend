@@ -9,14 +9,14 @@ namespace SlackClone.Core.Tests.Unit.Services
 {
     [TestClass]
     [TestCategory("Unit")]
-    public class DummyChatRepositoryTests
+    public class DummyMessageRepositoryTests
     {
-        private DummyChatRepository _sut;
+        private DummyMessageRepository _sut;
 
         [TestInitialize]
         public void Initialize()
         {
-            _sut = new DummyChatRepository();
+            _sut = new DummyMessageRepository();
         }
 
         [TestMethod]
@@ -150,7 +150,7 @@ namespace SlackClone.Core.Tests.Unit.Services
             var specification = new MessageSpecification
             {
                 ChannelId = channelId,
-                PageNumber = 5,
+                PageNumber = 1,
                 PageSize = 1
             };
 

@@ -16,11 +16,13 @@ namespace SlackClone.Core.Tests.Unit.Extensions
         {
             var expectedId = Guid.NewGuid();
             var expectedName = "Channel";
+            var expectedDesctiption = "Description";
 
             var channel = new Channel
             {
                 Id = expectedId,
                 Name = expectedName,
+                Description = expectedDesctiption,
                 CreatedAt = DateTime.Now,
                 CreatorId = Guid.NewGuid()
             };
@@ -29,7 +31,8 @@ namespace SlackClone.Core.Tests.Unit.Extensions
             var expected = new ChannelDto
             {
                 Id = expectedId,
-                Name = expectedName
+                Name = expectedName,
+                Description = expectedDesctiption
             };
 
             actual.Should().BeEquivalentTo(expected);
