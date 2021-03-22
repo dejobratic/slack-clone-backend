@@ -11,7 +11,8 @@ namespace SlackClone.Core.Extensions
             return new ChannelDto
             {
                 Id = channel.Id,
-                Name = channel.Name
+                Name = channel.Name,
+                Description = channel.Description
             };
         }
     }

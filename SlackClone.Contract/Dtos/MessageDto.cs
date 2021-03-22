@@ -8,5 +8,6 @@ namespace SlackClone.Contract.Dtos
         public string Text { get; set; }
         public UserDto Creator { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
+        public Guid ChannelId { get; set; }
     }
 }

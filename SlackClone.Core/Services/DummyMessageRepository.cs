@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SlackClone.Core.Services
 {
-    public class DummyChatRepository :
-        IChatRepository
+    public class DummyMessageRepository :
+        IMessageRepository
     {
         private readonly Dictionary<Guid, List<Message>> _chat;
 
-        public DummyChatRepository()
+        public DummyMessageRepository()
         {
             _chat = new Dictionary<Guid, List<Message>>();
         }
@@ -23,8 +23,10 @@ namespace SlackClone.Core.Services
             if (_chat.ContainsKey(channelId))
             {
                 var messages = _chat[channelId]
+                    .OrderByDescending(m => m.CreatedAt)
                     .Skip((specification.PageNumber - 1) * specification.PageSize)
                     .Take(specification.PageSize)
+                    .Reverse()
                     .ToArray();
 
                 return Task.FromResult(messages);
@@ -70,7 +72,6 @@ namespace SlackClone.Core.Services
                 .Single(m => m.Id == message.Id);
 
             existing.Text = message.Text;
-
             return Task.CompletedTask;
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SlackClone.Core.Services;
+using SlackClone.Core.UseCases;
 using SlackClone.Web.Hubs;
 
 namespace SlackClone.Web
@@ -27,14 +28,16 @@ namespace SlackClone.Web
                     builder
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    //.AllowAnyOrigin();
                     .AllowCredentials()
                     .WithOrigins("http://localhost:3000", "https://localhost:3000");
                 });
             });
 
+            services.AddTransient<ITimestampProvider, TimestampProvider>();
             services.AddSingleton<IChannelRepository, DummyChannelRepository>();
-            services.AddSingleton<IChatRepository, DummyChatRepository>();
+            services.AddSingleton<IMessageRepository, DummyMessageRepository>();
+
+            services.AddTransient<ICommandFactory, ChatCommandFactory>();
 
             services.AddSignalR();
             services.AddControllers().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
@@ -57,7 +60,6 @@ namespace SlackClone.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("hubs/chat");
-                endpoints.MapHub<ChannelHub>("hubs/channel");
                 endpoints.MapControllers();
             });
         }
