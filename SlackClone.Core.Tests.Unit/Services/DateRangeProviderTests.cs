@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SlackClone.Core.Models;
 using SlackClone.Core.Services;
 using System;
 
@@ -7,16 +8,17 @@ namespace SlackClone.Core.Tests.Unit.Services
 {
     [TestClass]
     [TestCategory("Unit")]
-    public class TimestampProviderTests
+    public class DateRangeProviderTests
     {
-        private TimestampProvider _sut;
+        private DateRangeProvider _sut;
 
-        private readonly DateTimeOffset _expected = DateTimeOffset.UtcNow;
+        private readonly DateRange _expected = 
+            new DateRange(DateTime.UtcNow, DateTime.UtcNow.AddDays(1));
 
         [TestInitialize]
         public void Initialize()
         {
-            _sut = new TimestampProvider(_expected);
+            _sut = new DateRangeProvider(_expected);
         }
 
         [TestMethod]
@@ -25,9 +27,9 @@ namespace SlackClone.Core.Tests.Unit.Services
         }
 
         [TestMethod]
-        public void Able_to_provide_timestamp()
+        public void Able_to_provide_date_range()
         {
-            DateTimeOffset actual = _sut.Provide();
+            DateRange actual = _sut.Provide();
 
             actual.Should().Be(_expected);
         }

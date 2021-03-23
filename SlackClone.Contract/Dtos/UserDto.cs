@@ -1,8 +1,13 @@
-﻿namespace SlackClone.Contract.Dtos
+﻿using System;
+
+namespace SlackClone.Contract.Dtos
 {
     public class UserDto
     {
-        public string Name { get; set; }
-        public string ImageUrl { get; set; }
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public TokenDto Token { get; set; }
     }
 }

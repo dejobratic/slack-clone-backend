@@ -12,11 +12,7 @@ namespace SlackClone.Core.Extensions
             {
                 Id = message.Id,
                 Text = message.Text,
-                Creator = new UserDto
-                {
-                    Name = "Dejan Bratic",
-                    ImageUrl = "https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-                },
+                CreatorId = message.CreatorId,
                 CreatedAt = message.CreatedAt,
                 ChannelId = message.ChannelId
             };

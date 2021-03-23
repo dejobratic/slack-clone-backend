@@ -4,8 +4,13 @@ using System;
 
 namespace SlackClone.Core.UseCases
 {
-    public class ChatCommandFactory :
+    public interface IChatCommandFactory :
         ICommandFactory
+    {
+    }
+
+    public class ChatCommandFactory :
+        IChatCommandFactory
     {
         private readonly ITimestampProvider _timestampProvider;
         private readonly IMessageRepository _messageRepo;

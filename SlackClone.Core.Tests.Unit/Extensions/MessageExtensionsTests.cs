@@ -31,12 +31,8 @@ namespace SlackClone.Core.Tests.Unit.Extensions
             {
                 Id = expectedId,
                 Text = expectedText,
+                CreatorId = message.CreatorId,
                 CreatedAt = expectedCreatedAt,
-                Creator = new UserDto
-                {
-                    Name = "Dejan Bratic",
-                    ImageUrl = "https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-                }
             };
 
             actual.Should().BeEquivalentTo(expected);

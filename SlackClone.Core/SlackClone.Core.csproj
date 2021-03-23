@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.9.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SlackClone.Contract\SlackClone.Contract.csproj" />
   </ItemGroup>
 

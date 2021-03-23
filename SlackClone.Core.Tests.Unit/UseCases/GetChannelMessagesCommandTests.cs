@@ -19,6 +19,7 @@ namespace SlackClone.Core.Tests.Unit.UseCases
 
         private readonly string _expectedText = "Some text!";
         private readonly Guid _expectedChannelId = Guid.NewGuid();
+        private readonly Guid _expectedCreatorId = Guid.NewGuid();
         private readonly DateTimeOffset _expectedCreatedAt = DateTimeOffset.UtcNow;
 
         [TestInitialize]
@@ -40,7 +41,7 @@ namespace SlackClone.Core.Tests.Unit.UseCases
                             Id = Guid.NewGuid(),
                             Text = _expectedText,
                             ChannelId = _expectedChannelId,
-                            CreatorId = Guid.NewGuid(),
+                            CreatorId = _expectedCreatorId,
                             CreatedAt = _expectedCreatedAt
                         }
                     }
@@ -64,11 +65,7 @@ namespace SlackClone.Core.Tests.Unit.UseCases
                     Id = Guid.NewGuid(),
                     Text = _expectedText,
                     ChannelId = _expectedChannelId,
-                    Creator = new UserDto
-                    {
-                        Name = "Dejan Bratic",
-                        ImageUrl = "https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-                    },
+                    CreatorId = _expectedCreatorId,
                     CreatedAt = _expectedCreatedAt
                 }
             };

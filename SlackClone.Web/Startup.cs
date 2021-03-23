@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SlackClone.Core.Models;
 using SlackClone.Core.Services;
+using SlackClone.Core.Settings;
 using SlackClone.Core.UseCases;
 using SlackClone.Web.Hubs;
+using System;
 
 namespace SlackClone.Web
 {
@@ -33,11 +36,26 @@ namespace SlackClone.Web
                 });
             });
 
-            services.AddTransient<ITimestampProvider, TimestampProvider>();
+            services.AddSingleton<IJWTSettings>(provider =>
+                new JWTSettings
+                {
+                    Secret = Configuration["JWT_SECRET_KEY"]
+                });
+
+            services.AddTransient<ITimestampProvider>(provider =>
+                new TimestampProvider(DateTimeOffset.UtcNow));
+
+            services.AddTransient<IDateRangeProvider>(provider =>
+                new DateRangeProvider(new DateRange(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1))));
+
+            services.AddTransient<ITokenGenerator, JWTGenerator>();
+
+            services.AddSingleton<IUserRepository, DummyUserRepository>();
             services.AddSingleton<IChannelRepository, DummyChannelRepository>();
             services.AddSingleton<IMessageRepository, DummyMessageRepository>();
 
-            services.AddTransient<ICommandFactory, ChatCommandFactory>();
+            services.AddTransient<IAuthCommandFactory, AuthCommandFactory>();
+            services.AddTransient<IChatCommandFactory, ChatCommandFactory>();
 
             services.AddSignalR();
             services.AddControllers().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
