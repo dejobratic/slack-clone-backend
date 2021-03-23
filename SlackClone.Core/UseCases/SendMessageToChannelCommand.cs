@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace SlackClone.Core.UseCases
 {
-    public class SendMessageToGroupChatCommand :
+    public class SendMessageToChannelCommand :
         ICommand<MessageDto>
     {
-        private readonly SendMessageToGroupChatRequest _request;
+        private readonly SendMessageToChannelRequest _request;
         private readonly ITimestampProvider _timestampProvider;
         private readonly IMessageRepository _messageRepo;
 
-        public SendMessageToGroupChatCommand(
-            SendMessageToGroupChatRequest request, 
+        public SendMessageToChannelCommand(
+            SendMessageToChannelRequest request, 
             ITimestampProvider timestampProvider, 
             IMessageRepository messageRepo)
         {

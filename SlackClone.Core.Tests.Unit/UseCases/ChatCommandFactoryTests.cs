@@ -5,6 +5,7 @@ using SlackClone.Contract.Requests;
 using SlackClone.Core.Tests.Unit.Fakes;
 using SlackClone.Core.UseCases;
 using System;
+using System.Collections.Generic;
 
 namespace SlackClone.Core.Tests.Unit.UseCases
 {
@@ -29,12 +30,21 @@ namespace SlackClone.Core.Tests.Unit.UseCases
         }
 
         [TestMethod]
-        public void Able_to_create_SendMessageToGroupChatCommand()
+        public void Able_to_create_SendMessageToChannelCommand()
         {
-            var request = new SendMessageToGroupChatRequest();
+            var request = new SendMessageToChannelRequest();
 
             ICommand<MessageDto> actual = _sut.Create<MessageDto>(request);
-            actual.Should().BeOfType(typeof(SendMessageToGroupChatCommand));
+            actual.Should().BeOfType(typeof(SendMessageToChannelCommand));
+        }
+
+        [TestMethod]
+        public void Able_to_create_GetChannelMessagesCommand()
+        {
+            var request = new GetChannelMessagesRequest();
+
+            ICommand<IEnumerable<MessageDto>> actual = _sut.Create<IEnumerable<MessageDto>>(request);
+            actual.Should().BeOfType(typeof(GetChannelMessagesCommand));
         }
 
         [TestMethod]
@@ -47,22 +57,22 @@ namespace SlackClone.Core.Tests.Unit.UseCases
         }
 
         [TestMethod]
-        public void Throws_exception_when_trying_to_create_command_with_return_type_from_invalid_request()
+        public void Able_to_create_GetSubscribedChannels()
+        {
+            var request = new GetSubscribedChannelsRequest();
+
+            ICommand<IEnumerable<ChannelDto>> actual = _sut.Create<IEnumerable<ChannelDto>>(request);
+            actual.Should().BeOfType(typeof(GetSubscribedChannelsCommand));
+        }
+
+        [TestMethod]
+        public void Throws_exception_when_trying_to_create_command_from_invalid_request()
         {
             Action action = () => 
                 _sut.Create<object>(new object() as IRequest);
 
             action.Should().Throw<Exception>()
                 .WithMessage("Unable to create chat command.");
-        }
-
-        [TestMethod]
-        public void Throw_exception_when_trying_to_create_command_without_return_parameters_with_invalid_request()
-        {
-            Action action = () =>
-                _sut.Create(new object() as IRequest);
-
-            action.Should().Throw<NotImplementedException>();
         }
     }
 }

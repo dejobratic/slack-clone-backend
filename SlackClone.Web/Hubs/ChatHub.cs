@@ -3,6 +3,7 @@ using SlackClone.Contract.Dtos;
 using SlackClone.Contract.Requests;
 using SlackClone.Core.UseCases;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SlackClone.Web.Hubs
@@ -17,28 +18,45 @@ namespace SlackClone.Web.Hubs
             _commandFactory = commandFactory;
         }
 
-        public async Task JoinMessageGroup(Guid groupId)
+        public async Task SendMessageToChannel(
+            Guid groupId,
+            SendMessageToChannelRequest request)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupId.ToString());
+            var message = await Execute<SendMessageToChannelRequest, MessageDto>(request);
+            await Clients.Group(groupId.ToString()).SendAsync("ReceiveChannelMessage", message);
         }
 
-        public async Task SendMessageToGroup(
-            Guid groupId,
-            SendMessageToGroupChatRequest request)
+        public async Task GetChannelMessages(
+            GetChannelMessagesRequest request)
         {
-            var command = _commandFactory.Create<MessageDto>(request);
-            var message = await command.Execute();
-
-            await Clients.Group(groupId.ToString()).SendAsync("ReceiveMessage", message);
+            var messages = await Execute<GetChannelMessagesRequest, IEnumerable<MessageDto>>(request);
+            await Clients.Caller.SendAsync("GetChannelMessages", messages);
         }
 
         public async Task CreateChannel(
             CreateChannelRequest request)
         {
-            var command = _commandFactory.Create<ChannelDto>(request);
-            var channel = await command.Execute();
-
+            var channel = await Execute<CreateChannelRequest, ChannelDto>(request);
             await Clients.All.SendAsync("CreateChannel", channel);
+        }
+
+        public async Task GetSubscribedChannels(
+            GetSubscribedChannelsRequest request)
+        {
+            var channels = await Execute<GetSubscribedChannelsRequest, IEnumerable<ChannelDto>>(request);
+            await Clients.Caller.SendAsync("GetSubscribedChannels", channels);
+        }
+
+        public async Task JoinChannel(Guid groupId)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupId.ToString());
+        }
+
+        private async Task<TOut> Execute<TIn, TOut>(TIn request)
+            where TIn : IRequest
+        {
+            var command = _commandFactory.Create<TOut>(request);
+            return await command.Execute();
         }
     }
 }

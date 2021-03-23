@@ -21,25 +21,30 @@ namespace SlackClone.Core.UseCases
             _channelRepo = channelRepo;
         }
 
-        public ICommand Create(IRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
         public ICommand<T> Create<T>(IRequest request)
         {
             switch(request)
             {
-                case SendMessageToGroupChatRequest sendMessageToGroupChatRequest:
-                    return new SendMessageToGroupChatCommand(
+                case SendMessageToChannelRequest sendMessageToGroupChatRequest:
+                    return new SendMessageToChannelCommand(
                         sendMessageToGroupChatRequest,
                         _timestampProvider,
+                        _messageRepo) as ICommand<T>;
+
+                case GetChannelMessagesRequest getChannelMessagesRequest:
+                    return new GetChannelMessagesCommand(
+                        getChannelMessagesRequest,
                         _messageRepo) as ICommand<T>;
 
                 case CreateChannelRequest createChannelRequest:
                     return new CreateChannelCommand(
                         createChannelRequest,
                         _timestampProvider,
+                        _channelRepo) as ICommand<T>;
+
+                case GetSubscribedChannelsRequest getSubscribedChannelsRequest:
+                    return new GetSubscribedChannelsCommand(
+                        getSubscribedChannelsRequest,
                         _channelRepo) as ICommand<T>;
 
                 default:

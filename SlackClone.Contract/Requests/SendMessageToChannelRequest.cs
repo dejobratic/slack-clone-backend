@@ -2,7 +2,7 @@
 
 namespace SlackClone.Contract.Requests
 {
-    public class SendMessageToGroupChatRequest :
+    public class SendMessageToChannelRequest :
         IRequest
     {
         public string Text { get; set; }

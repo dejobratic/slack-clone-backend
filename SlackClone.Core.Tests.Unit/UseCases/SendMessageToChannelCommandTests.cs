@@ -11,9 +11,9 @@ namespace SlackClone.Core.Tests.Unit.UseCases
 {
     [TestClass]
     [TestCategory("Unit")]
-    public class SendMessageToGroupChatCommandTests
+    public class SendMessageToChannelCommandTests
     {
-        private SendMessageToGroupChatCommand _sut;
+        private SendMessageToChannelCommand _sut;
 
         private readonly string _expectedText = "Some text!";
         private readonly Guid _expectedChannelId = Guid.NewGuid();
@@ -23,8 +23,8 @@ namespace SlackClone.Core.Tests.Unit.UseCases
         [TestInitialize]
         public void Initialize()
         {
-            _sut = new SendMessageToGroupChatCommand(
-                new SendMessageToGroupChatRequest
+            _sut = new SendMessageToChannelCommand(
+                new SendMessageToChannelRequest
                 {
                     Text = _expectedText,
                     CreatorId = _expectedCreatorId,
