@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackClone.Core.Tests.Unit"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackClone.Contract", "SlackClone.Contract\SlackClone.Contract.csproj", "{69B05F50-5551-4220-81E0-C4EE510D6223}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlackClone.Auth.Core", "SlackClone.Auth.Core\SlackClone.Auth.Core.csproj", "{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlackClone.Auth.Core.Tests.Unit", "SlackClone.Auth.Core.Tests.Unit\SlackClone.Auth.Core.Tests.Unit.csproj", "{FD78DD3A-1A0B-4A06-8F65-9630972316A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{F7DCAA45-F6EB-4A91-8399-B9FD6953DF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +39,21 @@ Global
 		{69B05F50-5551-4220-81E0-C4EE510D6223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69B05F50-5551-4220-81E0-C4EE510D6223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69B05F50-5551-4220-81E0-C4EE510D6223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD78DD3A-1A0B-4A06-8F65-9630972316A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD78DD3A-1A0B-4A06-8F65-9630972316A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD78DD3A-1A0B-4A06-8F65-9630972316A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD78DD3A-1A0B-4A06-8F65-9630972316A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E2B19BA-1734-4A0D-AAB5-3956AAB57B6F} = {F7DCAA45-F6EB-4A91-8399-B9FD6953DF33}
+		{FD78DD3A-1A0B-4A06-8F65-9630972316A6} = {F7DCAA45-F6EB-4A91-8399-B9FD6953DF33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01543A0C-B177-4E53-8E3F-46FAFE4AE976}

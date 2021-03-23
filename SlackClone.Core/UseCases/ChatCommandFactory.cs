@@ -4,11 +4,6 @@ using System;
 
 namespace SlackClone.Core.UseCases
 {
-    public interface IChatCommandFactory :
-        ICommandFactory
-    {
-    }
-
     public class ChatCommandFactory :
         IChatCommandFactory
     {
@@ -17,8 +12,8 @@ namespace SlackClone.Core.UseCases
         private readonly IChannelRepository _channelRepo;
 
         public ChatCommandFactory(
-            ITimestampProvider timestampProvider, 
-            IMessageRepository messageRepo, 
+            ITimestampProvider timestampProvider,
+            IMessageRepository messageRepo,
             IChannelRepository channelRepo)
         {
             _timestampProvider = timestampProvider;
@@ -28,7 +23,7 @@ namespace SlackClone.Core.UseCases
 
         public ICommand<T> Create<T>(IRequest request)
         {
-            switch(request)
+            switch (request)
             {
                 case SendMessageToChannelRequest sendMessageToGroupChatRequest:
                     return new SendMessageToChannelCommand(

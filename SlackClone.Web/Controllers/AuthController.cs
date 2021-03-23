@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SlackClone.Auth.Core.UseCases;
 using SlackClone.Contract.Dtos;
 using SlackClone.Contract.Requests;
 using SlackClone.Core.UseCases;

@@ -1,14 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SlackClone.Auth.Core\SlackClone.Auth.Core.csproj" />
     <ProjectReference Include="..\SlackClone.Contract\SlackClone.Contract.csproj" />
     <ProjectReference Include="..\SlackClone.Core\SlackClone.Core.csproj" />
   </ItemGroup>
-
 
 </Project>
