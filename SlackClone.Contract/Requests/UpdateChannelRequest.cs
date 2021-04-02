@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace SlackClone.Contract.Dtos
+namespace SlackClone.Contract.Requests
 {
-    public class ChannelDto
+    public class UpdateChannelRequest :
+        IRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid CreatorId { get; set; }
-        public Guid[] SubscriberIds { get; set; }
     }
 }

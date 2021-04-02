@@ -19,6 +19,16 @@ namespace SlackClone.Core.Services
         public Task<Channel[]> Get()
             => Task.FromResult(_channels.ToArray());
 
+        public Task<Channel> Get(Guid id)
+        {
+            var channel = _channels.SingleOrDefault(c => c.Id == id);
+
+            if(channel is null)
+                throw new Exception($"No channel found.");
+
+            return Task.FromResult(channel);
+        }
+
         public Task Save(Channel channel)
         {
             var existing = _channels.FirstOrDefault(c => c.Id == channel.Id);

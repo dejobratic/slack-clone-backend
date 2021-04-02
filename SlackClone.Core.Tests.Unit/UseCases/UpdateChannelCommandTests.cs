@@ -2,36 +2,50 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SlackClone.Contract.Dtos;
 using SlackClone.Contract.Requests;
+using SlackClone.Core.Models;
 using SlackClone.Core.Tests.Unit.Fakes;
 using SlackClone.Core.UseCases;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SlackClone.Core.Tests.Unit.UseCases
 {
     [TestClass]
     [TestCategory("Unit")]
-    public class CreateChannelCommandTests
+    public class UpdateChannelCommandTests
     {
-        private CreateChannelCommand _sut;
+        private UpdateChannelCommand _sut;
 
+        private readonly Guid _expectedId = Guid.NewGuid();
         private readonly string _expectedName = "Some name!";
         private readonly string _expectedDescription = "Some description!";
         private readonly Guid _expectedCreatorId = Guid.NewGuid();
-        private readonly DateTimeOffset _expectedCreatedAt = DateTimeOffset.UtcNow;
 
         [TestInitialize]
         public void Initialize()
         {
-            _sut = new CreateChannelCommand(
-                new CreateChannelRequest
+            _sut = new UpdateChannelCommand(
+                new UpdateChannelRequest
                 {
+                    Id = _expectedId,
                     Name = _expectedName,
                     Description = _expectedDescription,
-                    CreatorId = _expectedCreatorId,
                 },
-                new FakeTimestampProvider { Returns = _expectedCreatedAt },
-                new FakeChannelRepository());
+                new FakeChannelRepository
+                {
+                    Returns = new[]
+                    {
+                        new Channel
+                        {
+                            Id = _expectedId,
+                            SubscriberIds = new List<Guid>
+                            {
+                                _expectedCreatorId
+                            }
+                        }
+                    }
+                });
         }
 
         [TestMethod]
@@ -46,20 +60,16 @@ namespace SlackClone.Core.Tests.Unit.UseCases
 
             var expected = new ChannelDto
             {
-                Id = Guid.NewGuid(),
+                Id = _expectedId,
                 Name = _expectedName,
                 Description = _expectedDescription,
-                CreatorId = _expectedCreatorId,
                 SubscriberIds = new Guid[]
                 {
                     _expectedCreatorId
                 }
             };
 
-            actual.Id.Should().NotBeEmpty();
-            actual.Should().BeEquivalentTo(expected, opt =>
-                opt.Excluding(ctx => ctx.Id)
-            );
+            actual.Should().BeEquivalentTo(expected);
         }
     }
 }

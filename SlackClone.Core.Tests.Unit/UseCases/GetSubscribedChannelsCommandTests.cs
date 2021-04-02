@@ -19,6 +19,7 @@ namespace SlackClone.Core.Tests.Unit.UseCases
 
         private readonly string _expectedName = "Some name!";
         private readonly string _expectedDescription = "Some description!";
+        private readonly Guid _expectedCreatorId = Guid.NewGuid();
         private readonly DateTimeOffset _expectedCreatedAt = DateTimeOffset.UtcNow;
 
         [TestInitialize]
@@ -35,8 +36,12 @@ namespace SlackClone.Core.Tests.Unit.UseCases
                             Id = Guid.NewGuid(),
                             Name = _expectedName,
                             Description = _expectedDescription,
-                            CreatorId = Guid.NewGuid(),
-                            CreatedAt = _expectedCreatedAt
+                            CreatorId = _expectedCreatorId,
+                            CreatedAt = _expectedCreatedAt,
+                            SubscriberIds = new List<Guid>
+                            {
+                                _expectedCreatorId
+                            }
                         }
                     }
                 });
@@ -59,6 +64,11 @@ namespace SlackClone.Core.Tests.Unit.UseCases
                     Id = Guid.NewGuid(),
                     Name = _expectedName,
                     Description = _expectedDescription,
+                    CreatorId = _expectedCreatorId,
+                    SubscriberIds = new Guid[]
+                    {
+                        _expectedCreatorId
+                    }
                 }
             };
 

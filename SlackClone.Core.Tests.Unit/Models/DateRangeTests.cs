@@ -6,6 +6,7 @@ using System;
 namespace SlackClone.Core.Tests.Unit.Models
 {
     [TestClass]
+    [TestCategory("Unit")]
     public class DateRangeTests
     {
         [TestMethod]

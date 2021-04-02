@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace SlackClone.Web.Hubs
 {
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatHub :
         Hub
     {
-        private readonly ICommandFactory _commandFactory;
+        private readonly IChatCommandFactory _commandFactory;
 
-        public ChatHub(ICommandFactory commandFactory)
+        public ChatHub(IChatCommandFactory commandFactory)
         {
             _commandFactory = commandFactory;
         }
@@ -38,6 +39,13 @@ namespace SlackClone.Web.Hubs
         {
             var channel = await Execute<CreateChannelRequest, ChannelDto>(request);
             await Clients.All.SendAsync("CreateChannel", channel);
+        }
+
+        public async Task UpdateChannel(
+            UpdateChannelRequest request)
+        {
+            var channel = await Execute<UpdateChannelRequest, ChannelDto>(request);
+            await Clients.All.SendAsync("UpdateChannel", channel);
         }
 
         public async Task GetSubscribedChannels(

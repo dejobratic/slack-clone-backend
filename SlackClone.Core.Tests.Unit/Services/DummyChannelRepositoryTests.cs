@@ -25,6 +25,35 @@ namespace SlackClone.Core.Tests.Unit.Services
         }
 
         [TestMethod]
+        public async Task Able_to_get_all_channels()
+        {
+            var firstChannel = new Channel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name1",
+                CreatedAt = DateTime.Now,
+                CreatorId = Guid.NewGuid()
+            };
+
+            var secondChannel = new Channel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name2",
+                CreatedAt = DateTime.Now,
+                CreatorId = Guid.NewGuid()
+            };
+
+            await _sut.Save(firstChannel);
+            await _sut.Save(secondChannel);
+
+            var actual = await _sut.Get();
+
+            actual.Should().HaveCount(2);
+            actual.Should().Contain(firstChannel);
+            actual.Should().Contain(secondChannel);
+        }
+
+        [TestMethod]
         public async Task Able_to_add_channel()
         {
             var channel = new Channel
@@ -36,14 +65,13 @@ namespace SlackClone.Core.Tests.Unit.Services
             };
 
             await _sut.Save(channel);
-            var channels = await _sut.Get();
+            var actual = await _sut.Get(channel.Id);
 
-            channels.Should().HaveCount(1);
-            channels.Should().Contain(channel);
+            actual.Should().BeEquivalentTo(channel);
         }
 
         [TestMethod]
-        public async Task Throws_exception_when_trying_to_create_channel_with_same_name()
+        public async Task Throws_exception_when_trying_to_add_channel_with_same_name()
         {
             var firstChannel = new Channel
             {

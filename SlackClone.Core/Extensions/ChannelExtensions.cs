@@ -12,7 +12,9 @@ namespace SlackClone.Core.Extensions
             {
                 Id = channel.Id,
                 Name = channel.Name,
-                Description = channel.Description
+                Description = channel.Description,
+                CreatorId = channel.CreatorId,
+                SubscriberIds = channel.SubscriberIds.ToArray()
             };
         }
     }

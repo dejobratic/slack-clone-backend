@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SlackClone.Auth.Core.UseCases;
 using SlackClone.Contract.Dtos;
 using SlackClone.Contract.Requests;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace SlackClone.Web.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : 
         ControllerBase
     {

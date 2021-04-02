@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SlackClone.Auth.Core\SlackClone.Auth.Core.csproj" />
     <ProjectReference Include="..\SlackClone.Contract\SlackClone.Contract.csproj" />
     <ProjectReference Include="..\SlackClone.Core\SlackClone.Core.csproj" />

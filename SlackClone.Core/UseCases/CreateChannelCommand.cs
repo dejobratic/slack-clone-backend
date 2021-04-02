@@ -4,6 +4,7 @@ using SlackClone.Core.Extensions;
 using SlackClone.Core.Models;
 using SlackClone.Core.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SlackClone.Core.UseCases
@@ -41,7 +42,11 @@ namespace SlackClone.Core.UseCases
                 Name = _request.Name,
                 Description = _request.Description,
                 CreatorId = _request.CreatorId,
-                CreatedAt = _timestampProvider.Provide()
+                CreatedAt = _timestampProvider.Provide(),
+                SubscriberIds = new List<Guid>
+                {
+                    _request.CreatorId
+                }
             };
         }
     }

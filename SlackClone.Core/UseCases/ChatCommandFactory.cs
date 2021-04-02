@@ -42,6 +42,11 @@ namespace SlackClone.Core.UseCases
                         _timestampProvider,
                         _channelRepo) as ICommand<T>;
 
+                case UpdateChannelRequest updateChannelRequest:
+                    return new UpdateChannelCommand(
+                        updateChannelRequest,
+                        _channelRepo) as ICommand<T>;
+
                 case GetSubscribedChannelsRequest getSubscribedChannelsRequest:
                     return new GetSubscribedChannelsCommand(
                         getSubscribedChannelsRequest,

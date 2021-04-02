@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SlackClone.Core.Models
 {
@@ -9,5 +10,6 @@ namespace SlackClone.Core.Models
         public string Description { get; set; }
         public Guid CreatorId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
+        public List<Guid> SubscriberIds { get; set; }
     }
 }

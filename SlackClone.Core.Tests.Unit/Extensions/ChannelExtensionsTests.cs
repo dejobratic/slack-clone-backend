@@ -4,6 +4,7 @@ using SlackClone.Contract.Dtos;
 using SlackClone.Core.Extensions;
 using SlackClone.Core.Models;
 using System;
+using System.Collections.Generic;
 
 namespace SlackClone.Core.Tests.Unit.Extensions
 {
@@ -17,6 +18,7 @@ namespace SlackClone.Core.Tests.Unit.Extensions
             var expectedId = Guid.NewGuid();
             var expectedName = "Channel";
             var expectedDesctiption = "Description";
+            var expectedCreatorId = Guid.NewGuid();
 
             var channel = new Channel
             {
@@ -24,7 +26,11 @@ namespace SlackClone.Core.Tests.Unit.Extensions
                 Name = expectedName,
                 Description = expectedDesctiption,
                 CreatedAt = DateTime.Now,
-                CreatorId = Guid.NewGuid()
+                CreatorId = expectedCreatorId,
+                SubscriberIds = new List<Guid>
+                {
+                    expectedCreatorId
+                }
             };
 
             var actual = channel.ToContractModel();
@@ -32,7 +38,12 @@ namespace SlackClone.Core.Tests.Unit.Extensions
             {
                 Id = expectedId,
                 Name = expectedName,
-                Description = expectedDesctiption
+                Description = expectedDesctiption,
+                CreatorId = expectedCreatorId,
+                SubscriberIds = new Guid[]
+                {
+                    expectedCreatorId
+                }
             };
 
             actual.Should().BeEquivalentTo(expected);

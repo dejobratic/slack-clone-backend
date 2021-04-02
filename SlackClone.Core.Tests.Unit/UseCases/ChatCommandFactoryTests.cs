@@ -57,6 +57,15 @@ namespace SlackClone.Core.Tests.Unit.UseCases
         }
 
         [TestMethod]
+        public void Able_to_create_UpdateChannelCommand()
+        {
+            var request = new UpdateChannelRequest();
+
+            ICommand<ChannelDto> actual = _sut.Create<ChannelDto>(request);
+            actual.Should().BeOfType(typeof(UpdateChannelCommand));
+        }
+
+        [TestMethod]
         public void Able_to_create_GetSubscribedChannels()
         {
             var request = new GetSubscribedChannelsRequest();
